@@ -7,10 +7,10 @@ Você deve realizar os 3 commits descritos abaixo e submeter os 3 links dos comm
 
 ### Overview
 
-Primeiramente, explore o código do sistema em [model.py](https://github.com/andrehora/quiz/blob/main/model.py).
+Primeiramente, explore o código do sistema em [model.py](https://github.com/andrehora/test-quiz/blob/main/model.py).
 Note que temos duas classes: `Question` (que representa as questões do quiz) e `Choice` (escolha das questões).
 
-Explore também os cinco testes em [tests.py](https://github.com/andrehora/quiz/blob/main/tests.py) para entender melhor como o sistema funciona:
+Explore também os cinco testes em [tests.py](https://github.com/andrehora/test-quiz/blob/main/tests.py) para entender melhor como o sistema funciona:
 Por exemplo:
 
 ```python
@@ -47,8 +47,8 @@ Caso tenha dúvidas, verifique a documentação do GitHub sobre como [criar fork
 
 Neste projeto, utilizamos o [GitHub Actions](https://github.com/features/actions) (ferramenta de CI/CD do GitHub) para executar os testes automaticamente a cada commit.
 
-Abra o arquivo de configuração do GitHub Actions [.github/workflows/tests.yml](https://github.com/andrehora/quiz/blob/main/.github/workflows/tests.yml) e observe que os testes são executados em três sistemas operacionais (Ubuntu, macOS e Windows) e múltiplas versões da linguagem Python.
-Veja um exemplo da execução em: https://github.com/andrehora/quiz/actions/runs/14231638679.
+Abra o arquivo de configuração do GitHub Actions [.github/workflows/tests.yml](https://github.com/andrehora/test-quiz/blob/main/.github/workflows/tests.yml) e observe que os testes são executados em três sistemas operacionais (Ubuntu, macOS e Windows) e múltiplas versões da linguagem Python.
+Veja um exemplo da execução em: https://github.com/andrehora/test-quiz/actions/runs/14231638679.
 
 Ative o GitHub Actions no seu repositório.
 Para isso, basta ir na aba `Actions` e clicar no botão verde.
