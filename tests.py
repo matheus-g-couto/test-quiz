@@ -35,10 +35,10 @@ def test_create_choice():
     
     question.add_choice('a', False)
 
-    choice = question.choices[0]
+    c = question.choices[0]
     assert len(question.choices) == 1
-    assert choice.text == 'a'
-    assert not choice.is_correct
+    assert c.text == 'a'
+    assert not c.is_correct
     
 def test_create_choice_with_invalid_text():
     question = Question(title='q1')
@@ -64,18 +64,18 @@ def test_create_multiple_choices():
 def test_remove_choice_by_id():
     question = Question(title='q1')
     
-    choice1 = question.add_choice('a', False)
+    c1 = question.add_choice('a', False)
     
     assert len(question.choices) == 1
 
-    question.remove_choice_by_id(choice1.id)
+    question.remove_choice_by_id(c1.id)
     
     assert len(question.choices) == 0
     
 def test_remove_choice_by_invalid_id():
     question = Question(title='q1')
     
-    choice1 = question.add_choice('a', False)
+    c1 = question.add_choice('a', False)
     
     assert len(question.choices) == 1
 
@@ -97,43 +97,69 @@ def test_remove_all_choices():
     assert len(question.choices) == 0
     
 def test_set_correct_choices():
-    q = Question("q1", max_selections=2)
+    question = Question("q1", max_selections=2)
 
-    c1 = q.add_choice("a")
-    c2 = q.add_choice("b")
-    c3 = q.add_choice("c")
+    c1 = question.add_choice("a")
+    c2 = question.add_choice("b")
+    c3 = question.add_choice("c")
 
-    q.set_correct_choices([c1.id, c3.id])
+    question.set_correct_choices([c1.id, c3.id])
 
     assert c1.is_correct is True
     assert c2.is_correct is False
     assert c3.is_correct is True
     
 def test_set_correct_choices_with_invalid_id():
-    q = Question("q1")
+    question = Question("q1")
 
-    c1 = q.add_choice("a")
+    c1 = question.add_choice("a")
 
     with pytest.raises(Exception):
-        q.set_correct_choices([c1.id, 'invalid_id'])
+        question.set_correct_choices([c1.id, 'invalid_id'])
         
 def test_correct_selected_choices():
-    q = Question("q1", max_selections=2)
+    question = Question("q1", max_selections=2)
 
-    c1 = q.add_choice("a", True)
-    c2 = q.add_choice("b", False)
-    c3 = q.add_choice("c", True)
+    c1 = question.add_choice("a", True)
+    c2 = question.add_choice("b", False)
+    c3 = question.add_choice("c", True)
 
-    corrects = q.correct_selected_choices([c1.id, c2.id])
+    corrects = question.correct_selected_choices([c1.id, c2.id])
 
     assert corrects == [c1.id]
     
 def test_correct_selected_choices_with_too_many_selections():
-    q = Question("q1", max_selections=2)
+    question = Question("q1", max_selections=2)
 
-    c1 = q.add_choice("a", True)
-    c2 = q.add_choice("b", False)
-    c3 = q.add_choice("c", True)
+    c1 = question.add_choice("a", True)
+    c2 = question.add_choice("b", False)
+    c3 = question.add_choice("c", True)
 
     with pytest.raises(Exception):
-        q.correct_selected_choices([c1.id, c2.id, c3.id])
+        question.correct_selected_choices([c1.id, c2.id, c3.id])
+        
+@pytest.fixture
+def sample_question():
+    question = Question("q1", points=10)
+    
+    c1 = question.add_choice("a", True)
+    c2 = question.add_choice("b", False)
+    c3 = question.add_choice("c", True)
+    
+    return [question, c1, c2, c3]
+    
+def test_remove_all_choices_fixture(sample_question):
+    question, *_ = sample_question
+
+    question.remove_all_choices()
+
+    assert len(question.choices) == 0
+    
+def test_set_correct_choices_with_fixture(sample_question):
+    question, c1, c2, c3 = sample_question
+
+    question.set_correct_choices([c1.id, c3.id])
+
+    assert c1.is_correct is True
+    assert c2.is_correct is False
+    assert c3.is_correct is True
